@@ -22,7 +22,7 @@ La arquitectura no está definida, entonces te damos total libertad para diseña
 2) Definir los endpoints de la API de Ítems.
 3) Incluir un diagrama explicando cómo estaría diseñado/estructurado el código de la API. (incluir un esqueleto del código es un plus)
 
--
+
 
 Datos de Arquitectura:
 
