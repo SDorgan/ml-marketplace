@@ -1,0 +1,33 @@
+version: '3.4'
+
+services:
+  server:
+    build:
+      context: .
+    ports:
+     - "5000:5000"
+    volumes:
+     - "./src:/usr/app/src"
+    environment:
+     - FLASK_APP=/usr/app/src/app.py
+     - FLASK_ENV=development
+     - DATABASE_HOST=database
+     - DATABASE_PORT=27017
+    depends_on:
+     - database
+
+  database:
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=shop
+    ports:
+      - "27017:27017"
+    volumes:
+      - data:/data/db
+      - "./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js"
+
+volumes:
+  data:

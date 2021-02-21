@@ -1,0 +1,171 @@
+swagger: '2.0'
+info:
+  description: ML excercise API
+  version: 1.0.0
+  title: SD-Marketplace
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+paths:
+  /product:
+    get:
+      parameters:
+      - in: query
+        name: query
+        type: string
+        required: false
+        description: "Query parameter for Filtering Products"
+      description: "Gets all products according to the query filter parameter"
+      responses:
+        200:
+          description: "Returns filtered products"
+          schema:
+            properties:
+              products:
+                items:
+                  $ref: '#/definitions/Product'
+    post:
+      description: "Creates a new Product"
+      parameters:
+        - description: "Product Data"
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/Product"
+      responses:
+        200:
+          description: "Product Successfully Created"
+          schema:
+            properties:
+              products:
+                items:
+                  $ref: '#/definitions/Product'
+  /product/{product_id}:
+    parameters:
+    - name: product_id
+      in: path
+      type: string
+      description: "Product id"
+      required: true
+    get:
+      description: "Gets the Product"
+      responses:
+        200:
+          description: "Returns single Product"
+          schema:
+            $ref: '#/definitions/Product'
+        404:
+          description: "Product Not Found"
+    put:
+      description: "Modifies an existing Product"
+      responses:
+        200:
+          description: "Product Successfully Modified"
+          schema:
+            $ref: '#/definitions/Product'
+        404:
+          description: "Product Not Found"
+    delete:
+      description: "Deletes a Product"
+      responses:
+        200:
+          description: "Product Successfully Deleted"
+        404:
+          description: "Product Not Found"
+  /product/{product_id}/evaluation:
+    parameters:
+    - name: product_id
+      in: path
+      type: string
+      description: "Product id"
+      required: true
+    get:
+      description: "Obtains all Evaluations on a Product"
+      responses:
+        200:
+          description: "Returns Single Product"
+          schema:
+            properties:
+              evaluations:
+                items:
+                  $ref: '#/definitions/Evaluation'
+        404:
+          description: "Product Not Found"
+    post:
+      description: "Posts a new Evaluation on a Product"
+      parameters:
+        - description: "Product Data"
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/Evaluation'
+      responses:
+        200:
+          description: "Evaluation Successfully Created"
+          schema:
+            $ref: '#/definitions/Evaluation'
+        404:
+          description: "Product Not Found"
+  
+        
+definitions:
+  Product:
+    type: object
+    required:
+    - image
+    - long_description
+    - name
+    - price
+    - seller
+    - short_description
+    properties:
+      amount_rating:
+        type: integer
+        example: 10
+      avg_rating:
+        type: number
+        format: float
+        example: 4.5
+      id:
+        type: string
+        format: uuid
+        example: "d290f1ee-6c54-4b01-90e6-d701748f0851"
+      image:
+        type: string
+        format: url
+        example: "https://i.imgur.com/KkAfQv7.jpg"
+      long_description:
+        type: string
+        example: "Brand new Toyota Jeep. The color is dark green"
+      name:
+        type: string
+        example: "Toyota Jeep"
+      price:
+        type: number
+        format: float
+        example: 1000000
+      seller:
+        type: string
+        example: "Toyota Company"
+      short_description:
+        type: string
+        example: "New Toyota"
+  Evaluation:
+    required:
+    - comment
+    - rating
+    properties:
+      comment:
+        type: string
+        example: "I have this car and I love it"
+      value:
+        type: integer
+        example:  4
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /SDorgan/SD-Marketplace/1.0.0
+schemes:
+ - https
